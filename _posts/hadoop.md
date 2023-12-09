@@ -1,3 +1,13 @@
+---
+layout: post
+title: hadoop是什么
+categories: [hadoop是什么]
+description: hadoop是什么
+keywords: hadoop是什么
+---
+
+
+
 # Apache Hadoop
 
 ### hadoop是什么？

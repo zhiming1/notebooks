@@ -1,3 +1,11 @@
+---
+layout: post
+title: hadoop搭建
+categories: [docker-compose搭建hadoop]
+description: hadoop
+keywords: hadoop,docker
+---
+
 # Hadoop搭建
 
 **编写docker-compose.yml**

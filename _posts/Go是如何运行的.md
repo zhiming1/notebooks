@@ -1,3 +1,13 @@
+---
+layout: post
+title: go是如何运行的
+categories: [go runtime,go 编译过程,go 编译原理]
+description: runtime,go编译过程
+keywords: runtime,go编译过程
+---
+
+
+
 # Go语言是如何运行的？
 
 **Go是什么？**
