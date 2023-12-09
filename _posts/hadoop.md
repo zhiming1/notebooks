@@ -1,0 +1,214 @@
+# Apache Hadoop
+
+### hadoop是什么？
+
+> 是一款支持 *数据密集型* *分布式应用程序* 
+>
+> ​	"数据密集型" 是指那些对数据处理需求较大、对数据存储和计算能力要求较高的应用或系统。
+>
+> ​		通常用来描述那些需要大量数据存储、高效处理和分析数据的应用。这些应用可能涉及大规模的数据库操作、复杂的数据分析、实时的数据处理等。
+>
+> ​		举例来说，社交媒体平台、大规模电子商务网站、科学研究中的数据分析应用等都属于数据密集型应用。这些应用需要有效地管理、存储和处理大量的数据，以满足用户需求或支持科学研究。因此，数据密集型系统通常需要强大的硬件基础设施和高效的算法来处理数据。
+>
+> ​		"分布式"是指将计算机系统的处理任务分配到多个独立的计算机或节点上，这些计算机通过网络进行通信和协作，以实现更高的性能、可用性和可扩展性。
+>
+> ​		在分布式系统中，各个节点可以独立地执行任务，彼此之间通过消息传递或远程过程调用进行通信。分布式系统的目标是通过将负载分布到多个节点上，从而提高整体系统的性能，并通过冗余和容错机制提高系统的可用性。分布式系统常用于大规模的计算、存储和处理任务
+>
+> ​		分布式系统面临一些挑战，如一致性、容错性、数据一致性等问题，需要采用适当的算法和协议来解决这些问题。
+
+### hadoop可以做什么?
+
+- **大数据存储：** Hadoop 的分布式文件系统（HDFS）用于存储大规模的数据。它将数据划分成多个块，分布存储在集群中的多个节点上，提供高容错性和可伸缩性。
+- **大数据处理：** Hadoop 提供了分布式计算框架 MapReduce，用于在大规模数据集上进行并行处理。MapReduce 可以将任务分解成多个子任务，在不同的节点上并行执行，从而加速数据处理过程。
+- **数据分析：** Hadoop 生态系统中有许多工具和库，如Apache Hive、Apache Pig 和 Apache Spark，用于进行数据分析。这些工具使用户能够使用 SQL 查询语言或高级编程语言（如Pig Latin或Scala）执行复杂的数据分析任务。
+- **日志处理：** Hadoop 可以用于存储和分析大量的日志数据。通过使用 MapReduce 或 Spark，可以轻松地处理日志，提取关键信息，并进行有意义的分析。
+- **机器学习：** Hadoop 生态系统中的工具，如Apache Mahout 和 Apache Spark MLlib，可以用于在大规模数据集上执行机器学习算法。这使得在分布式环境中进行大规模机器学习任务成为可能。
+- **图形处理：** Hadoop 生态系统中的 Apache Giraph 和 Apache Flink 等工具用于处理大规模图形数据，适用于图形算法和社交网络分析。
+- **数据仓库：** Hadoop 可以用作大型数据仓库，存储和处理结构化和非结构化数据。与传统的关系型数据库不同，Hadoop 具有更强大的横向扩展性。
+
+> "HDFS"是 Apache Hadoop 生态系统中的分布式文件系统下文中将详细解释
+>
+> "MapReduce"是一种用于处理和生成大规模数据集的编程模型和处理引擎，MapReduce 模型包括两个主要阶段：Map 阶段和 Reduce 阶段。这两个阶段都是由用户编写的简单函数组成。
+>
+> "Apache Hive"是一个基于 Hadoop 的数据仓库工具，提供了一种类似于 SQL 的查询语言（Hive QL），用于分析和处理大规模的结构化数据
+> "Apache Pig"是一个用于处理和分析大规模数据集的高级平台
+>
+> "Apache Spark"是一个开源的大数据处理框架，它提供了高性能、通用、可扩展的分布式计算引擎
+>
+> ps ： Hive 更注重数据仓库和 SQL 风格的查询，Pig 更灵活适用于半结构化数据，而 Spark 则是一个通用的、功能丰富的大数据处理引擎
+> "Apache Mahout"是一个开源的机器学习库，旨在提供可扩展、高性能且易于使用的机器学习算法
+>
+> "Apache Spark MLlib"是 Apache Spark 提供的机器学习库，旨在支持分布式机器学习任务
+>
+> "Apache Giraph"是一个用于大规模图处理的开源分布式图计算框架。它建立在 Apache Hadoop 之上，使用 Hadoop 分布式文件系统（HDFS）存储图数据，并通过 MapReduce 执行计算。
+> "Apache Flink"是一个分布式流处理和批处理的开源框架，旨在支持高性能、容错性、一致性的大规模数据处理
+
+ **HDFS**
+
+> Hadoop Distributed File System （hadoop 分布式文件系统）
+
+### Hadoop 安装
+
+**前置**
+
+- Java8
+
+
+
+**hadoop配置**
+
+```
+# 在hadoop-env.sh文件末尾追加
+export JAVA_HOME=/opt/bigdata/hadoop/server/jdk1.8.0_212
+export HDFS_NAMENODE_USER=root
+export HDFS_DATANODE_USER=root
+export HDFS_SECONDARYNAMENODE_USER=root
+export YARN_RESOURCEMANAGER_USER=root
+export YARN_NODEMANAGER_USER=root
+```
+
+**core-site.xml 核心模块配置**
+
+```
+<!-- 设置默认使用的文件系统 Hadoop支持file、HDFS、GFS、ali|Amazon云等文件系统 -->
+<property>
+  <name>fs.defaultFS</name>
+  <value>hdfs://hadoop-node1:8082</value>
+</property>
+
+<!-- 设置Hadoop本地保存数据路径 -->
+<property>
+  <name>hadoop.tmp.dir</name>
+  <value>/opt/bigdata/hadoop/data/hadoop-3.3.1</value>
+</property>
+
+<!-- 设置HDFS web UI用户身份 -->
+<property>
+  <name>hadoop.http.staticuser.user</name>
+  <value>root</value>
+</property>
+
+<!-- 聚合hive 用户代理设置 -->
+<property>
+  <name>hadoop.proxyuser.hosts</name>
+  <value>*</value>
+</property>
+
+<!-- 用户代理设置 -->
+<property>
+  <name>hadoop.proxyuser.root.groups</name>
+  <value>*</value>
+</property>
+
+<!-- 文件系统垃圾桶保存时间 -->
+<property>
+  <name>fs.trash.interval</name>
+  <value>1440</value>
+</property>
+
+```
+
+**hdfs-site.xml hdfs文件系统模块配置**
+
+```
+<!-- 设置SNN进程运行机器位置信息 -->
+<property>
+  <name>dfs.namenode.secondary.http-address</name>
+  <value>hadoop-node2:9868</value>
+</property>
+
+<!-- 必须将dfs.webhdfs.enabled属性设置为true，否则就不能使用webhdfs的LISTSTATUS、LISTFILESTATUS等需要列出文件、文件夹状态的命令，因为这些信息都是由namenode来保存的。 -->
+<property>
+  <name>dfs.webhdfs.enabled</name>
+  <value>true</value>
+</property>
+
+```
+
+**mapred.xml MapReduce模块配置**
+
+```
+<!-- 设置MR程序默认运行模式，yarn集群模式，local本地模式 -->
+<property>
+  <name>mapreduce.framework.name</name>
+  <value>yarn</value>
+</property>
+
+<!-- MR程序历史服务地址 -->
+<property>
+  <name>mapreduce.jobhistory.address</name>
+  <value>hadoop-node1:10020</value>
+</property>
+
+<!-- MR程序历史服务web端地址 -->
+<property>
+  <name>mapreduce.jobhistory.webapp.address</name>
+  <value>hadoop-node1:19888</value>
+</property>
+
+<!-- yarn环境变量 -->
+<property>
+  <name>yarn.app.mapreduce.am.env</name>
+  <value>HADOOP_MAPRED_HOME=${HADOOP_HOME}</value>
+</property>
+
+<!-- map环境变量 -->
+<property>
+  <name>mapreduce.map.env</name>
+  <value>HADOOP_MAPRED_HOME=${HADOOP_HOME}</value>
+</property>
+
+<!-- reduce环境变量 -->
+<property>
+  <name>mapreduce.reduce.env</name>
+  <value>HADOOP_MAPRED_HOME=${HADOOP_HOME}</value>
+</property>
+
+```
+
+**yarn-site.xml yarn模块配置** 
+
+```
+<!-- 设置YARN集群主角色运行集群位置 -->
+<property>
+  <name>yarn.resourcemanager.hostname</name>
+  <value>hadoop-node1</value>
+</property>
+
+<property>
+  <name>yarn.nodemanager.aux-services</name>
+  <value>mapreduce_shuffle</value>
+</property>
+
+<!-- 是否将对容器实施物理内存限制 -->
+<property>
+  <name>yarn.nodemanager.pmem-check-enabled</name>
+  <value>false</value>
+</property>
+
+<!-- 是否将对容器实施虚拟内存限制 -->
+<property>
+  <name>yarn.nodemanager.vmem-check-enabled</name>
+  <value>false</value>
+</property>
+
+<!-- 开启日志聚集 -->
+<property>
+  <name>yarn.log-aggregation-enable</name>
+  <value>true</value>
+</property>
+
+<!-- 设置yarn历史服务器地址 -->
+<property>
+  <name>yarn.log.server.url</name>
+  <value>http://hadoop-node1:19888/jobhistory/logs</value>
+</property>
+
+<!-- 设置yarn历史日志保存时间 7天 -->
+<property>
+  <name>yarn.log-aggregation.retain-seconds</name>
+  <value>604880</value>
+</property>
+
+```
+
