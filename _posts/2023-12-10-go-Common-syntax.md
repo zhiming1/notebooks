@@ -1,3 +1,12 @@
+---
+layout: post
+title: Go常用
+categories: [Go常用]
+description: Go常用
+keywords: Go常用
+
+---
+
 # Go常用语法
 
 #### Go切片
@@ -9,6 +18,27 @@
 - Data 指向数组的指针
 - Len 当前切片的长度
 - Cap 当前切片的容量
+
+
+
+#### Go chan
+
+```go
+ch1 := make(chan struct{})
+
+<-ch1
+
+priority:
+			for {
+				select {
+				case val1 := <-ch1:
+					fmt.Println(val1)
+				default:
+					break priority
+				}
+			}
+		}
+```
 
 
 
